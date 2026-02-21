@@ -1,76 +1,362 @@
-<style>
-          /* Lock product image height and aspect ratio */
-        .product-photo-container .lazyload__image-wrapper {
-          position: relative;
-          width: 100%;
-          padding-top: 100%; /* Makes it square */
-          overflow: hidden;
-        }
+<style> 
+/* Lock product image height and aspect ratio */ 
+.product-photo-container .lazyload__image-wrapper {
+ position: relative; 
+ width: 100%; 
+ padding-top: 100%; /* Makes it square */ 
+ overflow: hidden; 
+} 
 
-        .product__image-wrapper {
-          position: absolute !important;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-        }
+.product__image-wrapper { 
+ position: absolute !important; 
+ top: 0; 
+ left: 0; 
+ width: 100%; 
+ height: 100%; 
+ } 
+ 
+.product__image-wrapper img { 
+ object-fit: contain; 
+ width: 100%; 
+ height: 100%; 
+} 
 
-        .product__image-wrapper img {
-          object-fit: contain;
-          width: 100%;
-          height: 100%;
-        }
-        .product-photo-thumbs li {
-          padding: 5px;
-        }
+.product__image-wrapper {
+  background-color: #f5f5f5;
+  border-radius: 12;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 10x;
+}
 
-        .thumbnail-image-box {
-          position: relative;
-          width: 100%;
-          aspect-ratio: 1 / 1; /* You can change to 3 / 4 or 4 / 3 */
-          overflow: hidden;
-        }
+.product-photo-thumbs li { 
+ padding: 5px; 
+} 
+ 
+.thumbnail-image-box { 
+ position: relative; 
+ aspect-ratio: 1 / 1;
+ overflow: hidden; 
+} 
 
-        .thumbnail-image-box img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-          object-position: center;
-        }
+.thumbnail-image-box img { 
+ width: 100%; 
+ height: 100%; 
+ object-fit: contain; 
+ object-position: center; 
+} 
 
-    .product-variants,
-    .product-variants option {
-      color: #000 !important;
-      opacity: 1 !important;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
+.thumbnail-image-box {
+background-color: #f4f4f4;
+border-radius: 6px;
+box-shadow: 0 0px 4px rgba(0, 0, 0, 08);
+
+transition: transform 0.2s ease;
+}
+
+.thumbnail-image-box:hover {
+  transform: scale(1.05);
+}
+
+@media screen and (max-width: 768px) {
+.product-photo-thumbs {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  padding-left: 20px;
+  padding-right: 16px;
+  list-style: none;
+  overflow: hidden; 
+}
+
+.product-photo-thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.product-photo-thumbs li {
+  flex: 0 0 auto;
+  width: 64px;
+  padding: 0;
+}
+
+.thumbnail-image-box {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  height: auto;
+}
+}
+
+/* .product-variants, .product-variants option { 
+ color: #000 !important; 
+ opacity: 1 !important; 
+ -webkit-appearance: none; 
+ -moz-appearance: none; 
+ appearance: none; 
+} */
+
+
+/* Container Spacing */
+.product-variant-selection {
+  margin: 20px 0;
+}
+
+.variant-wrapper {
+  margin-bottom: 15px;
+}
+
+.variant-wrapper strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.variant-grid-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.custom-variant-btn {
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  padding: 12px 5px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 11px;
+  text-transform: uppercase;
+  height: 55px;
+  border-radius: 5px;
+}
+
+.custom-variant-btn.active {
+  background: #f4f4f4; 
+  border: 2px solid #333;
+  font-weight: bold;
+}
+
+.custom-dropdown-select {
+  width: 250px;
+  padding: 12px;
+  border: 1px solid #f4f4f4;
+  background: #fff;
+  cursor: pointer;
+  appearance: auto !important;
+}
+
+.product-form__input, .product-form__field, .selector-wrapper {
+  display: none !important;
+}
+
+.variant-box.sold-out {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.payment-buttons {
+  display: flex;           
+  justify-content: center; 
+  width: 100%;             
+  gap: 12px;               
+}
+
+.payment-buttons .btn--add-to-cart {
+  width: 600px;            
+  max-width: 250px;     
+  height: 52px;        
+  border-radius: 6px;      
+  background-color: #220F61; 
+  color: #fff;     
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 200;
+  font-size: 12px;
+  cursor: pointer;
+  z-index: 1;              
+}
+
+.payment-buttons .btn--add-to-cart .icon-cart {
+  margin-right: 8px;
+}
+
+.payment-buttons .shopify-payment-button {
+  display: none;  
+}
+
+#addToCart-{{ section.id }}:active {
+  opacity: 0.7;
+}
+
+.js-qty {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  width: 650px;
+  max-width: 120px;
+  height: 50px;
+  text-align: center;
+} 
+
+.js-qty input[type=text] {
+    display: block;
+    background: none;
+    text-align: center;
+    width: 100%;
+    padding: 5px 25px;
+    margin: 0;
+    color: #333333;
+    font-weight: 500;
+    font-size: 18px;
+    height: 100%;
+    padding: 0 10px;
+}
+
+.js--qty-adjuster {
+  flex: 0 0 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px; 
+  cursor: pointer;
+  height: 100%;
+}
+
+.js--add {
+    border-left: none;
+    margin-left: 10px; 
+    border-left: none; 
+    height: 50px;     
+    font-size: 20px;  
+    padding: 0 20px;
+    background: #220F61;
+    color: #fff;
+}
+
+.js--minus {
+    border-left: none;
+    margin-left: 0;
+    border-left: none; 
+    height: 50px;     
+    font-size: 20px;  
+    padding: 0 20px;
+    background: #C14244;
+    color: #fff;
+}
+
+.quantity-selector {
+    width: 70px;
+    align-items: center;
+    font-size: 15px;
     } 
 
-    /* Ensure quantity selector and payment buttons stack on mobile */
-  @media screen and (max-width: 749px) {
-    .addToCartForm--payment-button {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
 
-    .quantity-selector .js-qty {
-      width: 100%;
-    }
+.product-description.rte {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333333;
+  margin: 20px 0;
+  padding: 15px;
+}
 
-    .payment-buttons {
-      width: 100%;
-    }
+.parent {
+    position: relative; 
+    height: 
+}
 
-    .payment-buttons button,
-    .payment-buttons .shopify-payment-button {
+.right-corner {
+  position: absolute;
+  right: 0; 
+  top: 0;
+  font-size: 18px;
+  color: #333333;                  
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.product-grid-item {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.collection-product-title {
+  margin-top: 5px;
+  margin-bottom: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333333;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;         
+  -webkit-box-orient: vertical;
+  overflow: visible;
+  min-height: 3.5em;
+  text-align: left !important;
+}
+
+.product-item--price .h1 {
+  margin-top: 10px;        
+  margin-bottom: 0;    
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.product-grid-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color:rgb(236, 236, 236);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.btn {
+  height: 45px;        
+  border-radius: 6px;      
+  background-color: #516DE0; 
+  color: #fff;     
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 200;
+  font-size: 12px;
+  cursor: pointer;
+  z-index: 1;    
+  margin-bottom: 16px;
+}
+
+
+
+@media screen and (max-width: 749px) { 
+.addToCartForm--payment-button { 
+  display: block; 
+  flex-direction: column; 
+  gap: 10px; 
+} 
+
+/*.quantity-selector .js-qty {
       width: 100%;
-    }
-    .product-variants {
-    margin-bottom: 10px;
-  }
-  
+    } */
+
+.payment-buttons {
+      width: 100%;
+    } 
+
+.quantity-selector::-webkit-inner-spin-button,
+.quantity-selector::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.payment-buttons button, .payment-buttons .shopify-payment-button {
+  width: 100%; 
+} 
+
+.product-variants { 
+ margin-bottom: 10px; 
+} 
+} 
 </style>
 
 <div
@@ -254,34 +540,54 @@
 
           {% form 'product', product, class: form_class, id: form_id, data-product-form: '' %}
             {{ form | payment_terms }}
-            <strong>
-              <select
-                name="id"
-                id="productSelect-{{ section.id }}"
-                class="product-variants product-variants-{{ section.id }}"
-                {% if product.has_only_default_variant %}
-                  data-has-only-default-variant
-                {% endif %}
-              >
-                {% for variant in product.variants %}
-                  {% if variant.available %}
-                    <option
-                      {% if variant == product.selected_or_first_available_variant %}
-                        selected="selected"
-                      {% endif %}
-                      data-sku="{{ variant.sku }}"
-                      value="{{ variant.id }}"
-                    >
-                      {{ variant.title }} - {{ variant.price | money_with_currency }}
-                    </option>
 
-                  {% else %}
-                    <option disabled="disabled">{{ variant.title }} - {{ 'products.product.sold_out' | t }}</option>
-                  {% endif %}
-                {% endfor %}
-              </select>
-            </strong>
-            {% if section.settings.product_quantity_enable %}
+          <br>
+<div class="product-variant-selection">
+  {% unless product.has_only_default_variant %}
+    {% for option in product.options_with_values %}
+      
+      {% if option.name contains 'Variant' or option.name contains 'Flavor' %}
+        <div class="variant-wrapper">
+          <strong>{{ option.name }}</strong>
+          <div class="variant-grid-buttons">
+            {% for value in option.values %}
+              <button type="button" 
+                class="custom-variant-btn {% if option.selected_value == value %}active{% endif %}"
+                data-option-index="option{{ forloop.parentloop.index }}"
+                data-value="{{ value | escape }}">
+                {{ value }}
+              </button>
+            {% endfor %}
+          </div>
+        </div>
+
+      {% else %}
+        <div class="variant-wrapper">
+          <strong>{{ option.name }}</strong>
+          <select class="custom-dropdown-select" data-option-index="option{{ forloop.index }}">
+            {% for value in option.values %}
+              <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
+                {{ value }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      {% endif %}
+
+    {% endfor %}
+  {% endunless %}
+
+  <select name="id" id="productSelect-{{ section.id }}" style="display:none !important;">
+    {% for variant in product.variants %}
+      <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}>
+        {{ variant.title }}
+      </option>
+    {% endfor %}
+  </select>
+</div>
+
+          <br>
+             {% if section.settings.product_quantity_enable %}
               <label for="quantity" class="quantity-selector quantity-selector-{{ section.id }}">
                 {{- 'products.product.quantity' | t -}}
               </label>
@@ -337,10 +643,6 @@
                 <span class="icon icon-cart"></span>
                 <span id="addToCartText-{{ section.id }}">{{ 'products.product.add_to_cart' | t }}</span>
               </button>
-
-              {% if section.settings.enable_payment_button %}
-                {{ form | payment_button }}
-              {% endif %}
             </div>
           {% endform %}
         {% endif %}
@@ -348,12 +650,15 @@
       </div>
 
       <div class="product-description rte" itemprop="description">
+      <strong>
+        Description:
+      </strong>
         {{ product.description }}
       </div>
 
-      {% if section.settings.social_sharing_products %}
-        {% include 'social-sharing' %}
-      {% endif %}
+      <div class="parent">
+    <a href="/collections/all" class="right-corner">View More</a>
+</div>
     </div>
   </div>
   {% comment %}
@@ -398,7 +703,125 @@
   {% endunless %}
 </div>
 
+<script type="application/json" class="variant-data"> {{ product.variants | json }} </script>
+
+<script>
+(function () {
+  function initVariants() {
+    var priceEl = document.querySelector('[id^="productPrice-"]');
+    var shopifySelect = document.querySelector('select[name="id"]');
+    var dataEl = document.querySelector('.variant-data');
+    var dropdown = document.querySelector('.custom-dropdown-select');
+
+    if (!priceEl || !shopifySelect || !dataEl || !dropdown) return;
+
+    var variants = JSON.parse(dataEl.textContent);
+
+    function getActiveButtonValue() {
+      var btn = document.querySelector('.custom-variant-btn.active');
+      return btn ? btn.dataset.value : null;
+    }
+
+    function updateDropdownAvailability(autoSelect) {
+      var activeValue = getActiveButtonValue();
+      if (!activeValue) return;
+
+      var validOptions = [];
+
+      variants.forEach(function (v) {
+        if (v.option1 === activeValue) {
+          validOptions.push({
+            value: v.option2,
+            available: v.available
+          });
+        }
+      });
+
+      dropdown.querySelectorAll('option').forEach(function (opt) {
+        var match = validOptions.find(function (v) {
+          return v.value === opt.value;
+        });
+
+        if (!match) {
+          opt.hidden = true;
+        } else {
+          opt.hidden = false;
+          opt.disabled = !match.available;
+        }
+      });
+
+
+      if (autoSelect) {
+        var firstValid = dropdown.querySelector('option:not([hidden]):not([disabled])');
+        if (firstValid) dropdown.value = firstValid.value;
+      }
+    }
+
+    function findVariant() {
+      var option1 = getActiveButtonValue();
+      var option2 = dropdown.value;
+
+      return variants.find(function (v) {
+        return v.option1 === option1 && v.option2 === option2;
+      });
+    }
+
+    function updatePriceAndCart() {
+      var variant = findVariant();
+      if (!variant) return;
+
+      priceEl.innerHTML =
+        '<strong>₱' +
+        (variant.price / 100).toLocaleString('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }) +
+        '</strong>';
+
+      shopifySelect.value = variant.id;
+      shopifySelect.dispatchEvent(new Event('change', { bubbles: true }));
+      shopifySelect.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+
+    document.body.addEventListener('click', function (e) {
+      var btn = e.target.closest('.custom-variant-btn');
+      if (!btn) return;
+
+      btn.closest('.variant-grid-buttons')
+        .querySelectorAll('.custom-variant-btn')
+        .forEach(function (b) {
+          b.classList.remove('active');
+        });
+
+      btn.classList.add('active');
+
+      updateDropdownAvailability(true);
+      updatePriceAndCart();
+    });
+
+ 
+    dropdown.addEventListener('change', function () {
+      updatePriceAndCart();
+    });
+
+
+    updateDropdownAvailability(true);
+    updatePriceAndCart();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVariants);
+  } else {
+    initVariants();
+  }
+})();
+</script>
+
 {% schema %}
+
+
+
 {
   "name": {
     "cs": "Produkt",
@@ -901,4 +1324,6 @@
   ]
 }
 {% endschema %}
+
+
 
